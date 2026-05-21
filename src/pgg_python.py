@@ -9,7 +9,6 @@ class PggPython:
         self.lattice_size = lattice_size
         self.strategies = [random.randint(0, 2) for p in range(self.lattice_size**2)]
         self.memories = [[[1 for m in range(length_of_memeory-1)]+[1] for i in range(3)] for p in range(self.lattice_size**2)]
-        self.game_round = 1
         self.synergy_rate = synergy_rate
         self.cost = cost
         self.beta = beta
