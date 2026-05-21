@@ -14,14 +14,14 @@ class PggPython:
         self.beta = beta
         return None
     
-    def unit_of_player(self, player):
-        return [player, (player+1)%self.lattice_size**2, (player-1)%self.lattice_size**2, (player+self.lattice_size)%self.lattice_size**2, (player-self.lattice_size)%self.lattice_size**2]
+    def unit_of_player(self, player_index):
+        return [player_index, (player_index+1)%self.lattice_size**2, (player_index-1)%self.lattice_size**2, (player_index+self.lattice_size)%self.lattice_size**2, (player_index-self.lattice_size)%self.lattice_size**2]
     
-    def payoff_calculator(self, player):
+    def payoff_calculator(self, player_index):
         coopator_portion = self.cost
         defector_portion = self.cost
         loner_portion = self.cost
-        unit = self.unit_of_player(player)
+        unit = self.unit_of_player(player_index)
         if len(unit) - [self.strategies[p] for p in unit].count(2) != 0:
             coopator_portion = (self.synergy_rate * [self.strategies[p] for p in unit].count(1) *self.cost)/(len(unit) - [self.strategies[p] for p in unit].count(2))
             defector_portion = coopator_portion+self.cost
