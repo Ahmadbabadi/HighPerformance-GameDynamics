@@ -22,7 +22,7 @@ class PggPython:
         defector_portion = self.cost
         loner_portion = self.cost
         unit = self.unit_of_player(player_index)
-        if len(unit) - [self.strategies[p] for p in unit].count(2) != 0:
+        if len(unit) - [self.strategies[p] for p in unit].count(2) > 1: # Single cooprator or deffetor beheives like group of loners. 
             coopator_portion = (self.synergy_rate * [self.strategies[p] for p in unit].count(1) *self.cost)/(len(unit) - [self.strategies[p] for p in unit].count(2))
             defector_portion = coopator_portion+self.cost
         return [defector_portion, coopator_portion, loner_portion]
