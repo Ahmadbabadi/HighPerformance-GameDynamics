@@ -5,7 +5,7 @@ def mean_list(python_list):
     return sum(python_list)/len(python_list)
 
 class PggPython:
-    def __init__(self, lattice_size, length_of_memeory, synergy_rate, cost=1/5, beta=10, cooprators_rate = 0.33, defectors_rate = 0.33):
+    def __init__(self, lattice_size, length_of_memeory, synergy_rate, cost=1/5, beta=10):
         self.lattice_size = lattice_size
         self.strategies = [random.randint(0, 2) for p in range(self.lattice_size**2)]
         self.memories = [[[1 for m in range(length_of_memeory-1)]+[1] for i in range(3)] for p in range(self.lattice_size**2)]
@@ -56,7 +56,7 @@ class PggPython:
         for p in range(self.lattice_size**2):
             unit = self.unit_of_player(p)
             choosed_neighber = unit[random.randint(0, len(unit)-1)]
-            weight = 1/(1+math.exp(self.beta*(mean_list(self.memories[p][self.strategies[p]]) - self.memories[choosed_neighber][self.strategies[choosed_neighber]][-1])))
+            weight = 1/(1+math.exp(self.beta*(mean_list(self.memories[p][self.strategies[p]]) - mean_list(self.memories[choosed_neighber][self.strategies[choosed_neighber]]) )))
             if random.random() < weight:
                 temp_strategies[p] =  self.strategies[choosed_neighber]
         self.strategies = temp_strategies
