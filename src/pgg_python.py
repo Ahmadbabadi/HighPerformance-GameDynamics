@@ -15,7 +15,13 @@ class PggPython:
         return None
     
     def unit_of_player(self, player_index):
-        return [player_index, (player_index+1)%self.lattice_size**2, (player_index-1)%self.lattice_size**2, (player_index+self.lattice_size)%self.lattice_size**2, (player_index-self.lattice_size)%self.lattice_size**2]
+        L = self.lattice_size
+        x = player_index % L
+        y = player_index // L
+        neighbors = [player_index, y * L + ((x + 1) % L),
+                     y * L + ((x - 1) % L), ((y + 1) % L) * L + x,
+                     ((y - 1) % L) * L + x]
+        return neighbors
     
     def payoff_calculator(self, player_index):
         coopator_portion = self.cost
