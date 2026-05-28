@@ -62,15 +62,20 @@ class PggPython:
         self.strategies = temp_strategies
     
     def useful_data(self):
-        cooprators_rate = self.strategies.count(1)/self.lattice_size**2
+        cooperators_rate = self.strategies.count(1)/self.lattice_size**2
         defectors_rate = self.strategies.count(0)/self.lattice_size**2
-        return cooprators_rate, defectors_rate
+        return cooperators_rate, defectors_rate
     
     def main(self, rounds):
-        results = [[0, 0] for r in range(rounds)]
-        results[0] = self.useful_data()
+        self.data = [[0, 0] for r in range(rounds)]
+        self.data[0] = self.useful_data()
         for r in range(1, rounds):
             self.get_payoff_and_update_memory()
             self.pick_new_strategy()
-            results[r] = self.useful_data()
-        return results
+            self.data[r] = self.useful_data()
+        return self.data
+    
+    def save(self):
+        with open("pgg_"+"{}_{}_{}.pkl".format( self.lattice_size, self.length_of_memeory, self.synergy_rate), 'wb') as file:
+            pickle.dump(self.data, file)
+        return 0
