@@ -8,7 +8,9 @@ class PggPython:
         self.players_number = lattice_size ** 2
         self.cost = cost
         self.beta = beta
-        self.initial_featurs = np.array([self.lattice_size, self.length_of_memeory, self.synergy_rate, self.beta = beta, cooperators_rate, defectors_rate])
+        self.initial_featurs = np.array([lattice_size, length_of_memeory,
+                                         synergy_rate, beta,
+                                         cooperators_rate, defectors_rate])
         self.strategies = np.random.choice([0, 1, 2], size=self.players_number, p=[defectors_rate, cooperators_rate, 1-(cooperators_rate+defectors_rate)])
         self.memories = np.ones((self.players_number, 3, length_of_memeory), dtype=np.float32)
         return None
@@ -77,7 +79,7 @@ class PggPython:
     
     def save(self):
         np.savez_compressed("pgg_" +
-                        "{}_{}_{}.npz".format( self.lattice_size, self.length_of_memeory, self.synergy_rate),
+                        "{}_{}_{}.npz".format( self.initial_featurs[0], self.initial_featurs[1], self.initial_featurs[2]),
                         initial_featurs = self.initial_featurs,
                         data = self.data)
         return 0

@@ -1,5 +1,6 @@
 import random
 import math
+import pickle
 
 def mean_list(python_list):
     return sum(python_list)/len(python_list)
@@ -12,6 +13,8 @@ class PggPython:
         self.synergy_rate = synergy_rate
         self.cost = cost
         self.beta = beta
+        self.initial_featurs = [lattice_size, length_of_memeory,
+                                synergy_rate, beta]
         return None
     
     def unit_of_player(self, player_index):
@@ -76,6 +79,6 @@ class PggPython:
         return self.data
     
     def save(self):
-        with open("pgg_"+"{}_{}_{}.pkl".format( self.lattice_size, self.length_of_memeory, self.synergy_rate), 'wb') as file:
+        with open("pgg_"+"{}_{}_{}.pkl".format( self.initial_featurs[0], self.initial_featurs[1], self.initial_featurs[2]), 'wb') as file:
             pickle.dump(self.data, file)
         return 0

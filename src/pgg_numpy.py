@@ -1,8 +1,4 @@
 import numpy as np
-import pickle
-
-float_list = [1.13, 0.25, 3.28]
-
 
 
 class PggPython:
@@ -12,7 +8,7 @@ class PggPython:
         self.length_of_memeory = length_of_memeory
         self.cost = cost
         self.beta = beta
-        self.initial_featurs = np.array([self.lattice_size, self.length_of_memeory, self.synergy_rate, self.beta = beta, cooperators_rate, defectors_rate])
+        self.initial_featurs = np.array([self.lattice_size, self.length_of_memeory, self.synergy_rate, self.beta, cooperators_rate, defectors_rate])
         self.strategies = np.random.choice([0, 1, 2], size=self.lattice_size**2, p=[defectors_rate, cooperators_rate, 1-(cooperators_rate+defectors_rate)])
         self.memories = np.ones((self.lattice_size**2, 3, length_of_memeory), dtype=np.float32)
         return None
@@ -79,7 +75,7 @@ class PggPython:
     
     def save(self):
         np.savez_compressed("pgg_" +
-                        "{}_{}_{}.npz".format( self.lattice_size, self.length_of_memeory, self.synergy_rate),
+                        "{}_{}_{}.npz".format( self.initial_featurs[0], self.initial_featurs[1], self.initial_featurs[2]),
                         initial_featurs = self.initial_featurs,
                         data = self.data)
         return 0
