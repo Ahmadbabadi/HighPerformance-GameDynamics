@@ -27,7 +27,7 @@ class PggPython:
         return 0
     
     def build_cumulative_payoffs(self):
-        payoff_vectors = self.cost * np.ones((self.players_number, 3), dtype=np.float16)
+        payoff_vectors = self.cost * np.ones((self.players_number, 3), dtype=np.float32)
         strategies_in_each_unit = self.strategies[self.neighbors]
         participants = np.sum(strategies_in_each_unit != 2, axis=1)
         cooperators = np.sum(strategies_in_each_unit == 1, axis=1)
@@ -67,7 +67,7 @@ class PggPython:
         return np.array([cooperators_rate, defectors_rate])
     
     def main(self, rounds):
-        self.data = np.zeros((rounds, 2), dtype=np.float16)
+        self.data = np.zeros((rounds, 2), dtype=np.float32)
         self.data[0] = self.useful_data()
         self.build_adjacency_matrix()
         for r in range(1, rounds):
