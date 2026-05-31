@@ -4,7 +4,7 @@ from safetensors.torch import save_file
 # Disable gradient calculation globally
 torch.set_grad_enabled(False)
 
-class PggPython:
+class PggVectorizedPyTorch:
     def __init__(self, lattice_size, length_of_memeory, synergy_rate, cost=1/5, beta=10, cooperators_rate = 1/3, defectors_rate = 1/3):
         self.lattice_size = lattice_size
         self.synergy_rate = synergy_rate

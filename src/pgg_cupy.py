@@ -1,10 +1,7 @@
 import cupy as cp
-import time
 
 
-
-
-class PggPython:
+class PggVectorizedCuPy:
     def __init__(self, lattice_size, length_of_memeory, synergy_rate, cost=1/5, beta=10, cooperators_rate = 1/3, defectors_rate = 1/3):
         self.lattice_size = lattice_size
         self.synergy_rate = synergy_rate
