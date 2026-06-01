@@ -9,6 +9,7 @@ class PggVectorizedPyTorch:
         self.lattice_size = lattice_size
         self.synergy_rate = synergy_rate
         self.players_number = lattice_size ** 2
+        self.length_of_memeory = length_of_memeory
         self.cost = cost
         self.beta = beta
         self.initial_featurs = torch.tensor([lattice_size, 
@@ -49,9 +50,9 @@ class PggVectorizedPyTorch:
     
     def get_payoff_and_update_memory(self, cumulative_payoff):
         temp_mean = torch.mean(self.memories, axis =2)
-        self.memories[:, :, :-1] = self.memories[:, :, 1:]
-        self.memories[:, :, -1] = temp_mean
-        self.memories[torch.arange(self.players_number), self.strategies, -1] = cumulative_payoff
+        temp_mean[torch.arange(self.players_number), self.strategies] = cumulative_payoff
+        self.memories[:, :, self.last_memeory_pointer] = temp_mean
+        self.last_memeory_pointer = (self.last_memeory_pointer+1)%self.length_of_memeory
         return 0
     
     def pick_new_strategy(self):
@@ -73,6 +74,7 @@ class PggVectorizedPyTorch:
         return torch.tensor([cooperators_rate, defectors_rate])
     
     def main(self, rounds):
+        self.last_memeory_pointer = 0
         self.data = torch.zeros((rounds, 2), dtype=torch.float32)
         self.data[0] = self.useful_data()
         self.build_adjacency_matrix()
