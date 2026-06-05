@@ -2,15 +2,15 @@ import numpy as np
 
 
 class PggNumpy:
-    def __init__(self, lattice_size, length_of_memeory, synergy_rate, cost=1/5, beta=10, cooperators_rate = 1/3, defectors_rate = 1/3):
+    def __init__(self, lattice_size, memory_length, synergy_rate, cost=1/5, beta=10, cooperators_rate = 1/3, defectors_rate = 1/3):
         self.lattice_size = lattice_size
         self.synergy_rate = synergy_rate
-        self.length_of_memeory = length_of_memeory
+        self.memory_length = memory_length
         self.cost = cost
         self.beta = beta
-        self.initial_featurs = np.array([self.lattice_size, self.length_of_memeory, self.synergy_rate, self.beta, cooperators_rate, defectors_rate])
+        self.initial_featurs = np.array([self.lattice_size, self.memory_length, self.synergy_rate, self.beta, cooperators_rate, defectors_rate])
         self.strategies = np.random.choice([0, 1, 2], size=self.lattice_size**2, p=[defectors_rate, cooperators_rate, 1-(cooperators_rate+defectors_rate)])
-        self.memories = np.ones((self.lattice_size**2, 3, length_of_memeory), dtype=np.float32)
+        self.memories = np.ones((self.lattice_size**2, 3, memory_length), dtype=np.float32)
         return None
     
     def unit_of_player(self, player_index):

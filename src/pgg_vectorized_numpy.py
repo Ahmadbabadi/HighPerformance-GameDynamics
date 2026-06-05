@@ -2,18 +2,18 @@ import numpy as np
 
 
 class PggVectorizedNumpy:
-    def __init__(self, lattice_size, length_of_memeory, synergy_rate, cost=1/5, beta=10, cooperators_rate = 1/3, defectors_rate = 1/3):
+    def __init__(self, lattice_size, memory_length, synergy_rate, cost=1/5, beta=10, cooperators_rate = 1/3, defectors_rate = 1/3):
         self.lattice_size = lattice_size
         self.synergy_rate = synergy_rate
         self.players_number = lattice_size ** 2
-        self.length_of_memeory = length_of_memeory
+        self.memory_length = memory_length
         self.cost = cost
         self.beta = beta
-        self.initial_featurs = np.array([lattice_size, length_of_memeory,
+        self.initial_featurs = np.array([lattice_size, memory_length,
                                          synergy_rate, beta,
                                          cooperators_rate, defectors_rate])
         self.strategies = np.random.choice([0, 1, 2], size=self.players_number, p=[defectors_rate, cooperators_rate, 1-(cooperators_rate+defectors_rate)])
-        self.memories = np.ones((self.players_number, 3, length_of_memeory), dtype=np.float32)
+        self.memories = np.ones((self.players_number, 3, memory_length), dtype=np.float32)
         return None
     
     def build_adjacency_matrix(self):
@@ -46,7 +46,7 @@ class PggVectorizedNumpy:
         temp_mean = np.mean(self.memories, axis =2)
         temp_mean[np.arange(self.players_number), self.strategies] = cumulative_payoff
         self.memories[:, :, self.last_memeory_pointer] = temp_mean
-        self.last_memeory_pointer = (self.last_memeory_pointer+1)%self.length_of_memeory
+        self.last_memeory_pointer = (self.last_memeory_pointer+1)%self.memory_length
         return 0
     
     def pick_new_strategy(self):

@@ -5,20 +5,20 @@ from safetensors.torch import save_file
 torch.set_grad_enabled(False)
 
 class PggVectorizedPyTorch:
-    def __init__(self, lattice_size, length_of_memeory, synergy_rate, cost=1/5, beta=10, cooperators_rate = 1/3, defectors_rate = 1/3):
+    def __init__(self, lattice_size, memory_length, synergy_rate, cost=1/5, beta=10, cooperators_rate = 1/3, defectors_rate = 1/3):
         self.lattice_size = lattice_size
         self.synergy_rate = synergy_rate
         self.players_number = lattice_size ** 2
-        self.length_of_memeory = length_of_memeory
+        self.memory_length = memory_length
         self.cost = cost
         self.beta = beta
         self.initial_featurs = torch.tensor([lattice_size, 
-                                             length_of_memeory,
+                                             memory_length,
                                              synergy_rate, beta,
                                              cooperators_rate, defectors_rate])
         weights = torch.tensor([defectors_rate, cooperators_rate, 1-(cooperators_rate+defectors_rate)], dtype=torch.half)
         self.strategies = torch.multinomial(weights, num_samples=self.players_number, replacement=True)
-        self.memories = torch.ones((self.players_number, 3, length_of_memeory), dtype=torch.float32)
+        self.memories = torch.ones((self.players_number, 3, memory_length), dtype=torch.float32)
         return None
     
     def build_adjacency_matrix(self):
@@ -52,7 +52,7 @@ class PggVectorizedPyTorch:
         temp_mean = torch.mean(self.memories, axis =2)
         temp_mean[torch.arange(self.players_number), self.strategies] = cumulative_payoff
         self.memories[:, :, self.last_memeory_pointer] = temp_mean
-        self.last_memeory_pointer = (self.last_memeory_pointer+1)%self.length_of_memeory
+        self.last_memeory_pointer = (self.last_memeory_pointer+1)%self.memory_length
         return 0
     
     def pick_new_strategy(self):

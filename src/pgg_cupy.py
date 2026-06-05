@@ -2,17 +2,17 @@ import cupy as cp
 
 
 class PggVectorizedCuPy:
-    def __init__(self, lattice_size, length_of_memeory, synergy_rate, cost=1/5, beta=10, cooperators_rate = 1/3, defectors_rate = 1/3):
+    def __init__(self, lattice_size, memory_length, synergy_rate, cost=1/5, beta=10, cooperators_rate = 1/3, defectors_rate = 1/3):
         self.lattice_size = lattice_size
         self.synergy_rate = synergy_rate
         self.players_number = lattice_size ** 2
         self.cost = cost
         self.beta = beta
-        self.initial_featurs = cp.array([lattice_size, length_of_memeory,
+        self.initial_featurs = cp.array([lattice_size, memory_length,
                                          synergy_rate, beta,
                                          cooperators_rate, defectors_rate])
         self.strategies = cp.random.choice([0, 1, 2], size=self.players_number, p=[defectors_rate, cooperators_rate, 1-(cooperators_rate+defectors_rate)])
-        self.memories = cp.ones((self.players_number, 3, length_of_memeory), dtype=cp.float32)
+        self.memories = cp.ones((self.players_number, 3, memory_length), dtype=cp.float32)
         return None
     
     def build_adjacency_matrix(self):

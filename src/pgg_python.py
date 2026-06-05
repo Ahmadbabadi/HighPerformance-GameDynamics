@@ -6,14 +6,14 @@ def mean_list(python_list):
     return sum(python_list)/len(python_list)
 
 class PggPython:
-    def __init__(self, lattice_size, length_of_memeory, synergy_rate, cost=1/5, beta=10):
+    def __init__(self, lattice_size, memory_length, synergy_rate, cost=1/5, beta=10):
         self.lattice_size = lattice_size
         self.strategies = [random.randint(0, 2) for p in range(self.lattice_size**2)]
-        self.memories = [[[1 for m in range(length_of_memeory-1)]+[1] for i in range(3)] for p in range(self.lattice_size**2)]
+        self.memories = [[[1 for m in range(memory_length-1)]+[1] for i in range(3)] for p in range(self.lattice_size**2)]
         self.synergy_rate = synergy_rate
         self.cost = cost
         self.beta = beta
-        self.initial_featurs = [lattice_size, length_of_memeory,
+        self.initial_featurs = [lattice_size, memory_length,
                                 synergy_rate, beta]
         return None
     
