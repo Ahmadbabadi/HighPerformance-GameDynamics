@@ -106,11 +106,3 @@ function pgg_main(lattice_size, memory_length, synergy_rate, rounds, beta=10, co
     end
     return data
 end
-
-
-
-
-# Random.seed!(1234)
-BenchmarkTools.@btime pgg_main(512, 1, 4.5, 1000)
-# data = pgg_main(5, 1, 4.2, 1000)
-# print(data[1:10])
