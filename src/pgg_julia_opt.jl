@@ -84,7 +84,7 @@ end
 
 
 function pick_new_strategy(strategies, memories, units, beta)
-    new_strategies = deepcopy(strategies)
+    new_strategies = copy(strategies)
     for p = eachindex(strategies)
         selected_neighbor = units[p, rand(2:5)]
         if strategies[p] != strategies[selected_neighbor]
@@ -125,34 +125,3 @@ function pgg_main(lattice_size, memory_length, synergy_rate, rounds, beta=10, co
     return data
 end
 
-
-# Random.seed!(1234)
-
-lattice_size = 4096
-lattice_size = 512
-memory_length = 5
-synergy_rate = Float32(3.6)
-cost = Float32(1/5)
-beta = Int32(10)
-units, strategies, memories = pgg_init(lattice_size, memory_length)
-memory_pointer = 1
-cumulative_payoffs = zeros(Float32, length(strategies))
-cumulative_payoffs = build_cumulative_payoffs(strategies, cumulative_payoffs, units, synergy_rate, cost)
-buffer_matrix = zeros(Float32, lattice_size^2, 3)
-buffer_count = falses(length(strategies))
-memories, memory_pointer = update_memory(memories, strategies, cumulative_payoffs, memory_pointer, buffer_matrix)
-# BenchmarkTools.@btime build_units($lattice_size)
-# BenchmarkTools.@btime pgg_init(lattice_size, memory_length)
-# BenchmarkTools.@btime build_cumulative_payoffs($strategies, cumulative_payoffs, $units, $synergy_rate, $cost)
-# BenchmarkTools.@btime update_memory($memories, $strategies, $cumulative_payoffs, 1)
-# BenchmarkTools.@btime useful_data($strategies)
-
-# BenchmarkTools.@time pgg_main(256, 5, 3.5, 1000)
-# BenchmarkTools.@time pgg_main(512, 5, 3.5, 1000)
-# BenchmarkTools.@time pgg_main(1024, 5, 3.5, 1000)
-# BenchmarkTools.@time pgg_main(2048, 1, 4.5, 1000)
-# BenchmarkTools.@btime pgg_main(2048, 5, 3.5, 1000)
-println()
-
-# data = pgg_main(1024, 1, 4.5, 1000)
-# print(data[990:1001])
