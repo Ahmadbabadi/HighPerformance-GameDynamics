@@ -1,7 +1,8 @@
+module pgg_julia # make all files as a local julia module
+
 import StatsBase as sb
 import Statistics
 using Random
-import BenchmarkTools
 
 function build_units(lattice_size)
     L = lattice_size
@@ -106,3 +107,5 @@ function pgg_main(lattice_size, memory_length, synergy_rate, rounds, beta=10, co
     end
     return data
 end
+
+end # end the pgg_julia_opt module
