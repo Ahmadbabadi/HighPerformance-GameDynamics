@@ -66,7 +66,7 @@ class PggVectorizedCuPy:
         defectors_rate = cp.mean(self.strategies==0)
         return cp.array([cooperators_rate, defectors_rate])
     
-    def main(self, rounds):
+    def run_simulation(self, rounds):
         self.data = cp.zeros((rounds, 2), dtype=cp.float32)
         self.data[0] = self.useful_data()
         self.build_adjacency_matrix()

@@ -69,7 +69,7 @@ class PggPython:
         defectors_rate = self.strategies.count(0)/self.lattice_size**2
         return cooperators_rate, defectors_rate
     
-    def main(self, rounds):
+    def run_simulation(self, rounds):
         self.data = [[0, 0] for r in range(rounds)]
         self.data[0] = self.useful_data()
         for r in range(1, rounds):

@@ -73,7 +73,7 @@ class PggVectorizedPyTorch:
         defectors_rate = (self.strategies==0).sum()/self.players_number
         return torch.tensor([cooperators_rate, defectors_rate])
     
-    def main(self, rounds):
+    def run_simulation(self, rounds):
         self.last_memeory_pointer = 0
         self.data = torch.zeros((rounds, 2), dtype=torch.float32)
         self.data[0] = self.useful_data()

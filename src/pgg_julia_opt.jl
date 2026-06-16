@@ -109,7 +109,7 @@ function useful_data(strategies)
 end
 
 
-function pgg_main(lattice_size, memory_length, synergy_rate, rounds, beta=10, cost=1/5, cooperator_rate=1/3, defector_rate=1/3)
+function run_simulation(lattice_size, memory_length, synergy_rate, rounds, beta=10, cost=1/5, cooperator_rate=1/3, defector_rate=1/3)
     N = lattice_size^2
     data = zeros(rounds+1, 2)
     memory_pointer = 1

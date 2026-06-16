@@ -64,7 +64,7 @@ class PggNumpy:
         defectors_rate = np.mean(self.strategies==0)
         return np.array([cooperators_rate, defectors_rate])
     
-    def main(self, rounds):
+    def run_simulation(self, rounds):
         self.data = np.zeros((rounds, 2), dtype=np.float16)
         self.data[0] = self.useful_data()
         for r in range(1, rounds):

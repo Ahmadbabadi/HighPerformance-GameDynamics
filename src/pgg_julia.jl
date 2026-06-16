@@ -94,7 +94,7 @@ function useful_data(strategies)
     return [cooperator_rate, defector_rate]
 end
 
-function pgg_main(lattice_size, memory_length, synergy_rate, rounds, beta=10, cost=1/5, cooperator_rate=1/3, defector_rate=1/3)
+function run_simulation(lattice_size, memory_length, synergy_rate, rounds, beta=10, cost=1/5, cooperator_rate=1/3, defector_rate=1/3)
     data = zeros(rounds+1, 2)
     memory_pointer = 1
     units, strategies, memories = pgg_init(lattice_size, memory_length, cooperator_rate, defector_rate)

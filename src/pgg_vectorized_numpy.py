@@ -67,7 +67,7 @@ class PggVectorizedNumpy:
         defectors_rate = np.mean(self.strategies==0)
         return np.array([cooperators_rate, defectors_rate])
     
-    def main(self, rounds):
+    def run_simulation(self, rounds):
         self.last_memeory_pointer = 0
         self.data = np.zeros((rounds, 2), dtype=np.float32)
         self.data[0] = self.useful_data()
