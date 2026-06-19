@@ -1,7 +1,5 @@
 import numpy as np
 from numba import njit, prange
-import time
-
 
 @njit(cache=True, parallel=True)
 def _build_neighbors(L):
