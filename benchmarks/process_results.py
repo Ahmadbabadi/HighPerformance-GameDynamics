@@ -25,16 +25,15 @@ benchmarking_results = benchmarking_results.drop('julia_opt', axis=1)
 benchmarking_results = benchmarking_results.drop('julia_parallel', axis=1)
 benchmarking_results = benchmarking_results.drop('julia_cuda', axis=1)
 
-# benchmarking_results.drop()
+
 benchmarking_results = benchmarking_results.loc[:, ~benchmarking_results.columns.str.contains('^Unnamed')]
-# print(benchmarking_results.info())
+
 row = 0
 for a, b in benchmarking_results.groupby("lattice_size"):
     for version in b.columns[4:]:
         data.loc[row] = [version, a, b[version].mean()]
         row += 1
 
-# print(data)
 
 cupy = cupy.loc[:, ~cupy.columns.str.contains('^Unnamed')]
 for a, b in cupy.groupby("lattice_size"):
@@ -71,9 +70,9 @@ for i in julia_cuda.index:
     data.loc[row] = ["julia_cuda", int(julia_cuda.loc[i, "L"]), float(julia_cuda.loc[i, "mean_ms"])/1000]
     row += 1
 
-result_path = (pwd / ".." / "data" / "processed" / "size_time.csv").resolve()
+result_path = (pwd / ".." / "data" / "processed").resolve()
 
-# data.to_csv(result_path, index=False)
+data.to_csv(result_path/"size_time.csv", index=False)
 
 for implt, b in data.groupby("version"):
     if implt == "python":
@@ -83,9 +82,7 @@ for implt, b in data.groupby("version"):
 for implt, b in data.groupby("version"):
     t_128 = b.loc[b["lattice_size"] == 128, "mean_time"].item()
     print(implt, round(t_128, 2), round(t_128_p/t_128, 1))
-    # print([a, t_128 ])
-        # x = b["lattice_size"]
-        # y = b["mean_time"]
+
 
 julia_parallel_thread = pd.DataFrame(columns=["threads", "runtime", "speedup", "efficiency"])
 row = 0
@@ -97,12 +94,4 @@ for t in [1, 2, 4, 8]:
 julia_parallel_thread["speedup"] = julia_parallel_thread["runtime"][0]/julia_parallel_thread["runtime"]
 julia_parallel_thread["efficiency"] = julia_parallel_thread["speedup"]/julia_parallel_thread["threads"]
 print(julia_parallel_thread)
-    # print(temp.loc[0, "mean_ms"].item())
-
-# julia_parallel_report = pd.DataFrame(columns=["threads", "runtime", "speedup", "efficiency"])
-# for i in julia_parallel_thread.index:
-#     julia_parallel_report.loc[i, "threads"] = julia_parallel_thread.loc[i, "threads"]
-#     julia_parallel_report.loc[i, "runtime"] = julia_parallel_thread.loc[i, "mean_time"]
-#     julia_parallel_report.loc[i, "speedup"] = julia_parallel_thread.loc[0, "mean_time"]/julia_parallel_thread.loc[i, "mean_time"],
-#     julia_parallel_report.loc[i, "efficiency"] = julia_parallel_report.loc[i, "speedup"]/
-#     print(i)
+julia_parallel_thread.to_csv(result_path/"julia_parallel_thread.csv", index=False)
