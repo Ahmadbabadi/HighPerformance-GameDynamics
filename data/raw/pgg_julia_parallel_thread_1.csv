@@ -1,0 +1,2 @@
+L,M,Sr,mean_ms,median_ms,std_ms,min_ms,max_ms,memory_bytes,allocations
+1024,15,3.0,77606.61724,77606.61724,NaN,77606.61724,77606.61724,217003480,16025
