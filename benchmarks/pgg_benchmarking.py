@@ -77,6 +77,6 @@ if __name__ == "__main__":
             if benchmarking_jobs.loc[row, implt] != benchmarking_jobs.loc[row, implt]:
                 runtime = func(int(L), int(M), float(Sr), int(seed))
                 benchmarking_jobs.loc[row, implt] = runtime
-                benchmarking_jobs.to_csv(result_path)
+                benchmarking_jobs.to_csv(result_path, index=False)
                 print(implt, int(L), int(M), float(Sr), int(seed), runtime)
             # print(benchmarking_jobs.loc[row, implt])
